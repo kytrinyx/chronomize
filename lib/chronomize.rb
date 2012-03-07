@@ -31,7 +31,8 @@ class Chronomize
   end
 
   def label_for(date, direction = nil)
-    pieces = [] << format(date) << chronicality(date)
+    label = chronicality(date)
+    pieces = label ? [label] : [format(date)]
     pieces.push forward if direction == :forward
     pieces.unshift backward if direction == :backward
     pieces.compact.join(" ")
@@ -43,11 +44,11 @@ class Chronomize
 
   def chronicality(date)
     if Date.yesterday?(date)
-      "(#{yesterday})" if yesterday
+      yesterday
     elsif Date.today?(date)
-      "(#{today})" if today
+      today
     elsif Date.tomorrow?(date)
-      "(#{tomorrow})" if tomorrow
+      tomorrow
     end
   end
 

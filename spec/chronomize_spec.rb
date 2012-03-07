@@ -16,16 +16,16 @@ describe Chronomize do
   context "today" do
     subject { Chronomize.new(feb7) }
 
-    its(:previous) { should eq('February 6, 2012 (yesterday)') }
-    its(:current) { should eq('February 7, 2012 (today)') }
-    its(:next) { should eq('February 8, 2012 (tomorrow)') }
+    its(:previous) { should eq('yesterday') }
+    its(:current) { should eq('today') }
+    its(:next) { should eq('tomorrow') }
   end
 
   context "tomorrow" do
     subject { Chronomize.new(feb8) }
 
-    its(:previous) { should eq('February 7, 2012 (today)') }
-    its(:current) { should eq('February 8, 2012 (tomorrow)') }
+    its(:previous) { should eq('today') }
+    its(:current) { should eq('tomorrow') }
     its(:next) { should eq('February 9, 2012') }
   end
 
@@ -33,8 +33,8 @@ describe Chronomize do
     subject { Chronomize.new(feb6) }
 
     its(:previous) { should eq('February 5, 2012') }
-    its(:current) { should eq('February 6, 2012 (yesterday)') }
-    its(:next) { should eq('February 7, 2012 (today)') }
+    its(:current) { should eq('yesterday') }
+    its(:next) { should eq('today') }
   end
 
   context "last week" do
@@ -47,16 +47,16 @@ describe Chronomize do
   context "with symbols" do
     subject { Chronomize.new(feb6, :previous => '<~', :next => '~>') }
     its(:previous) { should eq('<~ February 5, 2012') }
-    its(:current) { should eq('February 6, 2012 (yesterday)') }
-    its(:next) { should eq('February 7, 2012 (today) ~>') }
+    its(:current) { should eq('yesterday') }
+    its(:next) { should eq('today ~>') }
   end
 
   context "with alternate day names" do
     subject { Chronomize.new(feb7, :today => "aujourd'hui", :yesterday => 'hier', :tomorrow => 'demain') }
 
-    its(:previous) { should eq('February 6, 2012 (hier)') }
-    its(:current) { should eq('February 7, 2012 (aujourd\'hui)') }
-    its(:next) { should eq('February 8, 2012 (demain)') }
+    its(:previous) { should eq('hier') }
+    its(:current) { should eq('aujourd\'hui') }
+    its(:next) { should eq('demain') }
   end
 
   context "without day names" do
