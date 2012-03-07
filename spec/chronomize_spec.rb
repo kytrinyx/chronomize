@@ -11,6 +11,7 @@ describe Chronomize do
   let(:feb9) { Date.new(2012, 2, 9) }
 
   before(:each) { Timecop.freeze(feb7) }
+  after(:each) { Timecop.return }
 
   context "today" do
     subject { Chronomize.new(feb7) }
