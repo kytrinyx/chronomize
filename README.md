@@ -9,13 +9,13 @@ Navigation surrounding today's date.
     navigation = Chronomize.new(Date.today)
 
     navigation.previous
-    => 'March 6, 2012 (yesterday)'
+    => 'yesterday'
 
     navigation.current
-    => 'March 7, 2012 (today)'
+    => 'today'
 
     navigation.next
-    => 'March 8, 2012 (tomorrow)'
+    => 'tomorrow'
 
 Navigation with a different date selected.
 
@@ -25,10 +25,10 @@ Navigation with a different date selected.
     => 'March 5, 2012'
 
     navigation.current
-    => 'March 6, 2012 (yesterday)'
+    => 'yesterday'
 
     navigation.next
-    => 'March 7, 2012 (today)'
+    => 'today'
 
 ### Day names
 
@@ -39,26 +39,38 @@ Navigation with a different date selected.
     navigation = Chronomize.new(Date.today, :previous => '<', :next => '>')
 
     navigation.previous
-    => '< March 6, 2012 (yesterday)'
+    => '< yesterday'
 
     navigation.current
-    => 'March 7, 2012 (today)'
+    => 'today'
 
     navigation.next
-    => 'March 8, 2012 (tomorrow) >'
+    => 'tomorrow >'
 
 ### Change date format
 
 Use any valid strftime format.
 
-    navigation = Chronomize.new(Date.today, :date_format => '%-d.%-m.%Y')
+    navigation = Chronomize.new(Date.today - 3, :date_format => '%-d.%-m.%Y')
 
     navigation.previous
-    => '6.3.2012 (yesterday)'
+    => '3.3.2012'
 
     navigation.current
-    => '7.3.2012 (today)'
+    => '4.3.2012'
 
     navigation.next
-    => '8.3.2012 (tomorrow)'
+    => '5.3.2012'
+
+### I18n
+
+Set defaults in your locale file, e.g.:
+
+    # fr.yml
+    chronomize:
+      yesterday: hier
+      today: aujourd'hui
+      tomorrow: demain
+      previous: &laquo;
+      next: &raquoe;
 
