@@ -1,3 +1,4 @@
+require 'i18n'
 require 'date'
 require 'extensions/date'
 
@@ -6,7 +7,7 @@ class Chronomize
   attr_accessor :date, :date_format, :yesterday, :today, :tomorrow, :backward, :forward
   def initialize(date, options = {})
     self.date = date
-    self.date_format = options[:date_format] || "%B %-d, %Y"
+    self.date_format = options[:date_format] || :default
     self.yesterday = options.fetch(:yesterday) { 'yesterday' }
     self.today = options.fetch(:today) { 'today' }
     self.tomorrow = options.fetch(:tomorrow) { 'tomorrow' }
@@ -39,7 +40,7 @@ class Chronomize
   end
 
   def format(date)
-    date.strftime(date_format)
+    I18n.localize(date, :format => date_format)
   end
 
   def chronicality(date)

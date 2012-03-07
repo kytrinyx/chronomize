@@ -10,6 +10,11 @@ describe Chronomize do
   let(:feb8) { Date.new(2012, 2, 8) }
   let(:feb9) { Date.new(2012, 2, 9) }
 
+  before(:each) do
+    en = { :date => {:month_names => [nil, 'January', 'February'], :formats => {:default => "%B %-d, %Y"}} }
+    I18n.backend.store_translations(:en, en)
+  end
+
   before(:each) { Timecop.freeze(feb7) }
   after(:each) { Timecop.return }
 
@@ -74,4 +79,22 @@ describe Chronomize do
     its(:current) { should eq('4.2.2012') }
     its(:next) { should eq('5.2.2012') }
   end
+
+  context "in alternate locale" do
+    before(:each) do
+      no = { :date => {:month_names => [nil, 'januar', 'februar'], :formats => {:my_custom_format => '%-d. %B %Y'}} }
+      I18n.backend.store_translations(:no, no)
+      I18n.locale = :no
+    end
+    after(:each) do
+      I18n.locale = nil
+    end
+
+    subject { Chronomize.new(feb4, :date_format => :my_custom_format) }
+
+    its(:previous) { should eq('3. februar 2012') }
+    its(:current) { should eq('4. februar 2012') }
+    its(:next) { should eq('5. februar 2012') }
+  end
+
 end
