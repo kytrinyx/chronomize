@@ -7,8 +7,8 @@ Gem::Specification.new do |s|
   s.authors     = ["Katrina Owen"]
   s.email       = ["katrina.owen@gmail.com"]
   s.homepage    = ""
-  s.summary     = %q{Simple three-date navigation relative to today.}
-  s.description = %q{Simple three-date navigation relative to today.}
+  s.summary     = %q{Simple dateful navigation.}
+  s.description = %q{Creates labels for a window of dates, with knowledge about it's relationship to the current date.}
 
   s.rubyforge_project = "chronomize"
 
