@@ -7,12 +7,23 @@ class Chronomize
   attr_accessor :date, :date_format, :yesterday, :today, :tomorrow, :backward, :forward
   def initialize(date, options = {})
     self.date = date
+    configure(options)
+  end
+
+  def configure(options)
     self.date_format = options[:date_format] || :default
-    self.yesterday = options.fetch(:yesterday) { 'yesterday' }
-    self.today = options.fetch(:today) { 'today' }
-    self.tomorrow = options.fetch(:tomorrow) { 'tomorrow' }
-    self.backward = options[:previous]
-    self.forward = options[:next]
+    self.yesterday = options.fetch(:yesterday) {I18n.translate('chronomize.yesterday', :default => 'yesterday')}
+    self.today = options.fetch(:today) {I18n.translate('chronomize.today', :default => 'today')}
+    self.tomorrow = options.fetch(:tomorrow) {I18n.translate('chronomize.tomorrow', :default => 'tomorrow')}
+    self.backward = options.fetch(:previous) do
+      # i18n doesn't support nil as default :/
+      label = I18n.translate('chronomize.previous', :default => "")
+      label.empty? ? nil : label
+    end
+    self.forward = options.fetch(:next) do
+      label = I18n.translate('chronomize.next', :default => "")
+      label.empty? ? nil : label
+    end
   end
 
   def previous
@@ -27,6 +38,7 @@ class Chronomize
     label_for day(1), :forward
   end
 
+  private
   def day(n)
     date + n
   end

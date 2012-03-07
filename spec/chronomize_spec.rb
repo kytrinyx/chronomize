@@ -11,7 +11,7 @@ describe Chronomize do
   let(:feb9) { Date.new(2012, 2, 9) }
 
   before(:each) do
-    en = { :date => {:month_names => [nil, 'January', 'February'], :formats => {:default => "%B %-d, %Y"}} }
+    en = {:date => {:month_names => [nil, 'January', 'February'], :formats => {:default => "%B %-d, %Y"}}}
     I18n.backend.store_translations(:en, en)
   end
 
@@ -82,7 +82,7 @@ describe Chronomize do
 
   context "in alternate locale" do
     before(:each) do
-      no = { :date => {:month_names => [nil, 'januar', 'februar'], :formats => {:my_custom_format => '%-d. %B %Y'}} }
+      no = {:date => {:month_names => [nil, 'januar', 'februar'], :formats => {:my_custom_format => '%-d. %B %Y'}}}
       I18n.backend.store_translations(:no, no)
       I18n.locale = :no
     end
@@ -95,6 +95,19 @@ describe Chronomize do
     its(:previous) { should eq('3. februar 2012') }
     its(:current) { should eq('4. februar 2012') }
     its(:next) { should eq('5. februar 2012') }
+  end
+
+  context "with defaults" do
+    before(:each) do
+      en = {:chronomize => {:today => 'tdy', :tomorrow => 'tmrw', :yesterday => 'ystrdy', :previous => '<', :next => '>' }}
+      I18n.backend.store_translations(:en, en)
+    end
+
+    subject { Chronomize.new(feb7) }
+
+    its(:previous) { should eq('< ystrdy') }
+    its(:current) { should eq('tdy') }
+    its(:next) { should eq('tmrw >') }
   end
 
 end
